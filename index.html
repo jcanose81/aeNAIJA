@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>æNAIJA</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/loader.css">
+</head>
+<body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">æNAIJA</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+              
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav mr-auto">
+                    <!-- <li class="nav-item active">
+                      <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li> -->
+                  </ul>
+                  <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                  </form>
+                </div>
+              </nav>
+    <div class="container content mt-5">
+        <div class="row">
+            <div class="col-md-7 col-xs-12">
+                <h3>ITEMS ON æNAIJA</h3>
+                <div class="table-responsive col-xs-12">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Price ($)</th>
+                            <th scope="col">Owner</th>
+                            <th scope="col">Purchased</th>
+                            <th scope="col">Buy Product</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productListBody">
+                            <!-- <div id="productListBody">
+                            </div> -->
+                            <!-- <span id="loader">....LOADING....</span> -->
+                            <!-- <div id="loader"><img src="loading.svg" class="img-responsive mt-5 ml-5">
+                                <div class="ml-5"><b>LOADING...</b></div> -->
+                            </div>
+                                                          
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- FORM -->
+                <h3>SELL ON æNAIJA</h3>
+                <hr />
+                <div class="form-group">
+                    <input type="text" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Enter Product Name">
+                    <small id="emailHelp" class="form-text text-muted">Name Of The Item You Want To Sell</small>
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control" id="price" aria-describedby="priceHelp" placeholder="Enter Product Price">
+                    <small id="priceHelp" class="form-text text-muted">Price Of The Item You Want To Sell ( æ tokens)</small>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="images" aria-describedby="urlHelp" placeholder="Url Image Of The Item You Want To Sell">
+                    <small id="imageHelp" class="form-text text-muted">Url Image Of The Item You Want To Sell</small>
+                </div>
+                
+                <button type="submit" id="addProductBtn" class="btn btn-dark btn-block mb-5">Submit</button>
+                <!-- ENDFORM -->
+                <p class="text-center">Copyright &copy; Powered By æNAIJA Team </p>
+            </div>
+        </div>
+    </div>
+
+    <script id="template" type="x-tmpl-mustache">
+            
+        {{#productListArr}}
+            <tr>
+            <th scope="row">{{id}}</th>
+            <td><img src={{url}} width=100 height=79></td>
+            <td>{{name}}</td>
+            <td>{{price}}</td>
+            <td>{{owner}}</td>
+            <td>{{ purchased}}</td>
+            <td><button class="btn btn-dark buyBtn" id="{{id}}" class="buyBtn">BUY</button></td>
+             <tr>                              
+    {{/productListArr }}
+                    
+    </script>
+<script src="js/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.js"></script>
+<script src="https://unpkg.com/@aeternity/aepp-sdk/dist/aepp-sdk.browser-script.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="./index.js"></script>
+</body>
+</html>

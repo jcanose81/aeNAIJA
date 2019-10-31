@@ -1,0 +1,73 @@
+contract Market =
+
+  record product = {
+    id:int,
+    name: string,
+    price:int,
+    purchased:bool,
+    images:string,
+    owner:address
+    
+    }
+  
+  
+  record state = 
+    {
+      productLength : int,
+      products : map(int, product)
+    }
+  
+  entrypoint init() = 
+    { products = {}, 
+      productLength = 0}
+  
+    
+  entrypoint getProductLength() : int = 
+    state.productLength
+  
+  stateful entrypoint add_new_product(_name:string,_price:int, _images:string) =
+    let product = {id=getProductLength() + 1, name=_name,price=_price, images=_images,purchased=false, owner=Call.caller}
+    let index = getProductLength() + 1
+    put(state{products[index] = product, productLength  = index})
+
+  
+  entrypoint get_product_by_index(index:int) : product = 
+    switch(Map.lookup(index, state.products))
+      None => abort("Product does not exist with this index")
+      Some(x) => x  
+  
+  payable stateful entrypoint buy_product(_id:int)=
+    let product = get_product_by_index(_id) // get the current product with the id
+    
+    let  _seller  = product.owner : address
+    
+    require(product.id > 0,abort("NOT A PRODUCT ID"))
+    
+    // require that there is enough AE in the transaction
+    require(Call.value >= product.price,abort("You Don't Have Enough AE"))
+    
+    // require that the product has not been purchased
+    
+    require(!product.purchased,abort("PRODUCT ALREADY PURCHASED"))
+    
+    // require that the buyer is not the seller
+    
+    require(_seller != Call.caller,"SELLER CAN'T PURCHASE HIS ITEM")
+    
+    // transfer ownership
+    
+    //product.owner = Call.caller
+    
+    // mark as  purchased
+    
+    //product.purchased = true 
+    
+    // update the product
+    let updated_product = {id=product.id, name=product.name, price=product.price, images=product.images, purchased=true, owner=Call.caller}
+    
+    put(state{products[_id] = updated_product})
+    
+    // sends the amount
+    
+    Chain.spend(_seller, Call.value) 
+    
